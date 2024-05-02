@@ -11,7 +11,7 @@ const loginUserValidation = [
         .custom(async (value, { req }) => {
             const user = await UserRepository.getUserByUsername(value);
             if (!user) {
-                throw new Error('akun telah dinonaktifkan.');
+                throw new Error('akun telah dinonaktifkan atau username salah.');
             }
             return true;
         }),
