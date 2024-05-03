@@ -9,7 +9,7 @@ const usernameValidationRules: ValidationChain[] = [
   check('username')
     .custom(async (value, { req }) => {
       const id = req.params?.id ?? "";
-      const existingUser = await UserRepository.checkUsername(value);
+      const existingUser = await UserRepository.getUserByUsername(value);
       if (existingUser && existingUser.id !== id) {
         throw new Error('username sudah digunakan');
       }
