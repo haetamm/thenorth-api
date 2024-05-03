@@ -67,24 +67,24 @@ class UserRepository {
 
     public static async getUserByUsername(username: string) {
         try {
-            const user = await db.user.findOne({ where: { username } });
+            const user = await db.user.findOne({ where: { username }, paranoid: false });
             return user;
         } catch (err) {
             console.error(err);
         }
     }
 
-    public static async checkUsername(username: string) {
-        try {
-            const user = await db.user.findOne({ 
-                where: { username }, 
-                paranoid: false 
-            });
-            return user;
-        } catch (err) {
-            console.error(err);
-        }
-    }
+    // public static async checkUsername(username: string) {
+    //     try {
+    //         const user = await db.user.findOne({ 
+    //             where: { username }, 
+    //             paranoid: false 
+    //         });
+    //         return user;
+    //     } catch (err) {
+    //         console.error(err);
+    //     }
+    // }
 
     public static async updateUserById(id: Number, username: string, password?: string) {
         try {

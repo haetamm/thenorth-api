@@ -32,7 +32,7 @@ class AuthController implements IController {
             });
         }
 
-        return res.status(401).send('unauthorized');
+        return res.status(401).json({ statusCode: 'fail', message: 'Unauthorized' });
     }
 
     logout = async (req: Request, res: Response): Promise<Response> => {

@@ -9,7 +9,7 @@ const addUserValidation = [
     ...passwordValidation,
     check('username')
         .custom(async (value, { req }) => {
-            const user = await UserRepository.checkUsername(value);
+            const user = await UserRepository.getUserByUsername(value);
             if (user) {
                 throw new Error('username sudah digunakan.');
             }

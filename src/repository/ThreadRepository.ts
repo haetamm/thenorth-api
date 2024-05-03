@@ -216,7 +216,14 @@ static async getThreadByUserIdAndThreadId(page = 1, limit = 10, threadIds: any) 
                     'updated_at',
                 ],
                 subQuery: false,
-                group: ['thread.id', 'user.id', 'comments.id', 'comments.user.id', 'likes.user.id'],
+                group: [
+                  'thread.id',
+                  'user.id',
+                  'comments.id',
+                  'comments.user.id',
+                  'likes.id', // postgres db
+                  'likes.user.id'
+                ],
             });
             return thread ? thread : false;
         } catch (err) {

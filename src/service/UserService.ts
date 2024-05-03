@@ -99,7 +99,7 @@ class UserService {
 
     async activatedUser(): Promise<any> {
         const { username } = this.params;
-        const user = await UserRepository.checkUsername(username);
+        const user = await UserRepository.getUserByUsername(username);
 
         if (!user) {
             return { statusCode: 404, status: 'fail', message: 'user tidak ditemukan' };
