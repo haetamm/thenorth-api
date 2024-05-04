@@ -24,6 +24,12 @@ npx sequelize-cli db:migrate
 npx sequelize-cli db:migrate:undo
 ```
 
+__Database Seeders__
+
+```sh
+npx sequelize-cli db:seed:all
+```
+
 ### Compile and Hot-Reload for Development
 
 ```sh
@@ -41,3 +47,5 @@ npm run tsc
 ```
 
 Open [http://localhost:8000/api-docs](http://localhost:8000/api-docs) with your browser to see the documentation API.
+
+
