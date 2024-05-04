@@ -21,12 +21,12 @@ class AuthController implements IController {
 
             await UserRepository.updateExpriedToken(expiresDate, user.id);
 
-            // res.cookie('token', token, {
-            //     httpOnly: true,
-            //     secure: true,
-            //     sameSite: 'none',
-            //     expires: expiresDate,
-            // });
+            res.cookie('token', token, {
+                httpOnly: true,
+                secure: true,
+                sameSite: 'none',
+                expires: expiresDate,
+            });
             return res.json({
                 'statusCode': 200,
                 'message': 'login sukses',

@@ -34,9 +34,9 @@ class App {
         this.app.use(cookieParser());
         this.app.use(
             cors({
-              // origin: 'https://thenorth.vercel.app', // Ganti dengan asal/frontend yang sesuai
+              origin: 'https://thenorth.vercel.app', // Ganti dengan asal/frontend yang sesuai
               // origin: 'https://the-north.netlify.app', // Ganti dengan asal/frontend yang sesuai
-                origin: 'http://localhost:3000', 
+                // origin: 'http://localhost:3000', 
               credentials: true, // Mengizinkan penggunaan kredensial
             })
           );
