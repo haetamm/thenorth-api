@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class user extends Model {
     /**
@@ -11,40 +9,43 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      user.hasMany(models.thread, { 
-        onDelete: 'CASCADE',
-        foreignKey: 'user_id'
+      user.hasMany(models.thread, {
+        onDelete: "CASCADE",
+        foreignKey: "user_id",
       });
       user.hasMany(models.comment, {
-        onDelete: 'CASCADE',
-        foreignKey: 'user_id'
+        onDelete: "CASCADE",
+        foreignKey: "user_id",
       });
       user.hasMany(models.like, {
-        onDelete: 'CASCADE',
-        foreignKey: 'user_id'
+        onDelete: "CASCADE",
+        foreignKey: "user_id",
+      });
+      user.belongsToMany(models.role, {
+        through: "userRole",
+        foreignKey: "user_id",
       });
     }
   }
-  user.init({
-    username: {
+  user.init(
+    {
+      username: {
         type: DataTypes.STRING,
         unique: {
           args: true,
-          msg: 'Username already exists'
+          msg: "Username already exists",
         },
+      },
+      password: DataTypes.STRING,
+      deleted_at: DataTypes.DATE,
+      expried_token: DataTypes.DATE,
     },
-    password: DataTypes.STRING,
-    deleted_at: DataTypes.DATE,
-    is_admin: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
-    },
-    expried_token: DataTypes.DATE
-  }, {
-    sequelize,
-    modelName: 'user',
-    underscored: true,
-    paranoid: true,
-  });
+    {
+      sequelize,
+      modelName: "user",
+      underscored: true,
+      paranoid: true,
+    }
+  );
   return user;
 };

@@ -7,6 +7,9 @@
     "tsc": "rm -rf build/ && tsc",
     "ts": "rm -rf build/ && tsc -w",
     "dev": "nodemon ./build/src/index.js",
+    "migrate": "npx sequelize-cli db:migrate",
+    "migrate-undo": "npx sequelize-cli db:migrate:undo",
+    "seed": "npx sequelize-cli db:seed:all",
     "vercel-build": "tsc"
   },
   "keywords": [],

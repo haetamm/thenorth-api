@@ -1,29 +1,28 @@
-require('dotenv').config();
-
+require("dotenv").config();
 
 module.exports = {
-  "development": {
-    "username": process.env.DB_USER,
-    "password": process.env.DB_PASS,
-    "database": process.env.DB_NAME,
-    "host": process.env.DB_HOST,
-    "dialect": "postgres",
+  test: {
+    username: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
+    host: process.env.DB_HOST,
+    dialect: "postgres",
   },
-  "test": {
-    "dialect": "sqlite",
-    "storage": "../db/database.sqlite"
+  development: {
+    dialect: "sqlite",
+    storage: "./database.sqlite",
   },
-  "production": {
-    "username": process.env.DB_USER_DEPLOYMENT,
-    "password": process.env.DB_PASS_DEPLOYMENT,
-    "database": process.env.DB_NAME_DEPLOYMENT,
-    "host": process.env.DB_HOST_DEPLOYMENT,
-    "dialect": "postgres",
+  production: {
+    username: process.env.DB_USER_DEPLOYMENT,
+    password: process.env.DB_PASS_DEPLOYMENT,
+    database: process.env.DB_NAME_DEPLOYMENT,
+    host: process.env.DB_HOST_DEPLOYMENT,
+    dialect: "postgres",
     dialectOptions: {
       ssl: {
         require: true, // Ini mungkin diperlukan tergantung setup Supabase
-        rejectUnauthorized: false // Diperlukan jika menggunakan self-signed certificates
-      }
-    }
-  }
-}
+        rejectUnauthorized: false, // Diperlukan jika menggunakan self-signed certificates
+      },
+    },
+  },
+};
