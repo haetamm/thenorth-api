@@ -1,17 +1,17 @@
-import { Request, Response, NextFunction } from "express";
-import { validationResult, check, ValidationChain } from "express-validator";
-import UserRepository from "../../../repository/UserRepository";
-import { usernameValidation } from "./UsernameValidation";
-import { passwordValidation } from "./PasswordValidation";
-import { AuthenticatedRequest } from "../../../utilities/interface";
+import { Request, Response, NextFunction } from 'express';
+import { validationResult, check, ValidationChain } from 'express-validator';
+import UserRepository from '../../../repository/UserRepository';
+import { usernameValidation } from './UsernameValidation';
+import { passwordValidation } from './PasswordValidation';
+import { AuthenticatedRequest } from '../../../utilities/interface';
 
 const usernameValidationRules: ValidationChain[] = [
   ...usernameValidation,
-  check("username").custom(async (value, { req }) => {
-    const id = req.params?.id ?? "";
+  check('username').custom(async (value: any, { req }) => {
+    const id = req.params?.id ?? '';
     const existingUser = await UserRepository.getUserByUsername(value);
     if (existingUser && existingUser.id !== id) {
-      throw new Error("username sudah digunakan");
+      throw new Error('username sudah digunakan');
     }
     return true;
   }),
@@ -51,6 +51,6 @@ export const updateUserValidation = async (
     next();
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: 'Internal server error' });
   }
 };

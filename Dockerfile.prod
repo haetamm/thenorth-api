@@ -1,0 +1,30 @@
+# ---------- STAGE 1: BUILD ----------
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+
+RUN npm run tsc
+
+
+# ---------- STAGE 2: PRODUCTION ----------
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy package.json
+COPY package*.json ./
+
+# Install production deps only
+RUN npm ci --omit=dev
+
+# Copy build result
+COPY --from=builder /app/build ./build
+
+EXPOSE 8000
+
+CMD ["node", "build/index.js"]

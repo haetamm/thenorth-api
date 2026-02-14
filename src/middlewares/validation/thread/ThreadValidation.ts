@@ -1,16 +1,16 @@
-import { Request, Response, NextFunction } from "express";
-import { check, validationResult } from "express-validator";
+import { Request, Response, NextFunction } from 'express';
+import { check, validationResult } from 'express-validator';
 
 const addThreadValidation = [
-  check("title")
+  check('title')
     .trim()
     .notEmpty()
-    .withMessage("harus diisi.")
+    .withMessage('harus diisi.')
     .isLength({ max: 30 }),
-  check("body")
+  check('body')
     .trim()
     .notEmpty()
-    .withMessage("harus diisi.")
+    .withMessage('harus diisi.')
     .isLength({ max: 10000 }),
   (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);

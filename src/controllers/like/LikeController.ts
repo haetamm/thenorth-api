@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import IController from "./InterfaceController";
-import LikeService from "../../service/LikeService";
+import { Request, Response } from 'express';
+import IController from './InterfaceController';
+import LikeService from '../../service/LikeService';
 
 class LikeController implements IController {
   create = async (req: Request, res: Response): Promise<Response> => {

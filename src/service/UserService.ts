@@ -1,20 +1,20 @@
-import { Request, Response } from "express";
-import UserRepository from "../repository/UserRepository";
-import AuthenticationService from "./AuthenticationService";
-import AddedUser from "../entities/AddedUser";
-import ThreadRepository from "../repository/ThreadRepository";
-import GettedUser from "../entities/GetttedUser";
-import CommentRepository from "../repository/CommentRepository";
-import LikeRepository from "../repository/LikeRepository";
-import RoleRepository from "../repository/RoleRepository";
-import UserRoleRepository from "../repository/UserRoleRepository";
-import { AuthenticatedRequest } from "../utilities/interface";
-import { failResponse, successResponse } from "../utilities/response";
+import { Request, Response } from 'express';
+import UserRepository from '../repository/UserRepository';
+import AuthenticationService from './AuthenticationService';
+import AddedUser from '../entities/AddedUser';
+import ThreadRepository from '../repository/ThreadRepository';
+import GettedUser from '../entities/GetttedUser';
+import CommentRepository from '../repository/CommentRepository';
+import LikeRepository from '../repository/LikeRepository';
+import RoleRepository from '../repository/RoleRepository';
+import UserRoleRepository from '../repository/UserRoleRepository';
+import { AuthenticatedRequest } from '../utilities/interface';
+import { failResponse, successResponse } from '../utilities/response';
 
 class UserService {
   credential: any;
-  body: Request["body"];
-  params: Request["params"];
+  body: Request['body'];
+  params: Request['params'];
 
   constructor(req: AuthenticatedRequest, res: Response) {
     if (req.user) {
@@ -29,7 +29,7 @@ class UserService {
   private async getUserById(id: number) {
     const user = await UserRepository.getUserById(id);
     if (!user) {
-      return failResponse(404, "user tidak ditemukan");
+      return failResponse(404, 'user tidak ditemukan');
     }
     return user;
   }
@@ -41,17 +41,16 @@ class UserService {
 
   async addUser(): Promise<any> {
     const { username, password } = this.body;
-    const hashedPassword: string = await AuthenticationService.passwordHash(
-      password
-    );
+    const hashedPassword: string =
+      await AuthenticationService.passwordHash(password);
     const user = await UserRepository.addUser(username, hashedPassword);
     if (!user) {
-      return failResponse(400, "user gagal ditambahkan");
+      return failResponse(400, 'user gagal ditambahkan');
     }
 
-    const role = await RoleRepository.findByName("USER");
+    const role = await RoleRepository.findByName('USER');
     if (!role) {
-      return failResponse(404, "Role USER tidak ditemukan");
+      return failResponse(404, 'Role USER tidak ditemukan');
     }
 
     await UserRoleRepository.addUserRole(user.id, role.id);
@@ -83,7 +82,7 @@ class UserService {
     const expiresDate = new Date();
 
     if (new Date(user.expried_token) > expiresDate) {
-      return failResponse(403, "user sedang online");
+      return failResponse(403, 'user sedang online');
     }
 
     await UserRepository.updateExpriedToken(expiresDate, user.id);
@@ -105,11 +104,11 @@ class UserService {
     const user = await UserRepository.getUserByUsername(username);
 
     if (!user) {
-      return failResponse(404, "user tidak ditemukan");
+      return failResponse(404, 'user tidak ditemukan');
     }
 
     if (user.deletedAt === null) {
-      return failResponse(403, "user masih active");
+      return failResponse(403, 'user masih active');
     }
 
     await UserRepository.reactivateUser(user.username);
@@ -117,7 +116,7 @@ class UserService {
     await CommentRepository.reactivateComment(user.id, user.deletedAt);
     await LikeRepository.reactivateLike(user.id, user.deletedAt);
 
-    return successResponse(201, "user berhasil diaktifkan");
+    return successResponse(201, 'user berhasil diaktifkan');
   }
 }
 

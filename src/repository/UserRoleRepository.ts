@@ -1,4 +1,4 @@
-const db = require("../db/models");
+const db = require('../db/models');
 
 class UserRoleRepository {
   public static async addUserRole(userId: number, roleId: number) {
@@ -9,7 +9,7 @@ class UserRoleRepository {
       });
       return userRole;
     } catch (error) {
-      console.error("Error adding user role:", error);
+      console.error('Error adding user role:', error);
       return null;
     }
   }

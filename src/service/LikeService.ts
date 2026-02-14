@@ -1,13 +1,13 @@
-import { Request, Response } from "express";
-import ThreadRepository from "../repository/ThreadRepository";
-import LikeRepository from "../repository/LikeRepository";
-import { AuthenticatedRequest } from "../utilities/interface";
-import { failResponse, successResponse } from "../utilities/response";
+import { Request, Response } from 'express';
+import ThreadRepository from '../repository/ThreadRepository';
+import LikeRepository from '../repository/LikeRepository';
+import { AuthenticatedRequest } from '../utilities/interface';
+import { failResponse, successResponse } from '../utilities/response';
 
 class LikeService {
   credential: any;
-  body: Request["body"];
-  params: Request["params"];
+  body: Request['body'];
+  params: Request['params'];
 
   constructor(req: AuthenticatedRequest, res: Response) {
     this.credential = req?.user;
@@ -21,14 +21,14 @@ class LikeService {
     const thread = await ThreadRepository.getThreadById(Number(threadId));
 
     if (!thread) {
-      return failResponse(404, "thread tidak ditemukan");
+      return failResponse(404, 'thread tidak ditemukan');
     }
 
     const like = await LikeRepository.checkLikesThread(Number(id), thread.id);
 
     let likeCount = 0;
     let liked = 0;
-    let response = {
+    const response = {
       like_count: likeCount,
       user_id: id,
       thread_id: thread.id,

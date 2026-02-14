@@ -1,8 +1,8 @@
-import { Request, Response, NextFunction } from "express";
-import { check, validationResult } from "express-validator";
+import { Request, Response, NextFunction } from 'express';
+import { check, validationResult } from 'express-validator';
 
 const commentValidation = [
-  check("comentar").trim().notEmpty().withMessage("harus diisi."),
+  check('comentar').trim().notEmpty().withMessage('harus diisi.'),
   (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
 

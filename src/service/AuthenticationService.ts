@@ -1,5 +1,5 @@
-import { hash, compare } from "bcrypt";
-import { sign, verify } from "jsonwebtoken";
+import { hash, compare } from 'bcrypt';
+import { sign, verify, SignOptions } from 'jsonwebtoken';
 
 export interface User {
   sub: number;
@@ -16,19 +16,37 @@ class AuthenticationService {
     text: string,
     encript: string
   ): Promise<boolean> => {
-    let result = await compare(text, encript);
+    const result = await compare(text, encript);
     return result;
   };
 
   public static generateToken(user: User): string {
-    const secretKey: string = process.env.JWT_SECRET_KEY as string;
-    const expiresIn: string = process.env.JWT_EXPIRES_IN as string;
-    const token: string = sign({ user }, secretKey, { expiresIn });
+    const secretKey = process.env.JWT_SECRET;
+    const expiresIn = process.env.JWT_EXPIRES;
+
+    // Validasi environment variables
+    if (!secretKey || !expiresIn) {
+      throw new Error(
+        'JWT_SECRET or JWT_EXPIRES is not defined in environment variables!'
+      );
+    }
+
+    const options: SignOptions = {
+      expiresIn: expiresIn as SignOptions['expiresIn'], // Type assertion yang tepat
+    };
+
+    const token: string = sign({ user }, secretKey, options);
     return token;
   }
 
   public static decodeToken(token: string): any {
-    const secretKey: string = process.env.JWT_SECRET_KEY as string;
+    const secretKey = process.env.JWT_SECRET;
+
+    // Validasi environment variables
+    if (!secretKey) {
+      throw new Error('JWT_SECRET is not defined in environment variables!');
+    }
+
     const credential: any = verify(token, secretKey);
     return credential;
   }

@@ -1,13 +1,13 @@
-import { Request, Response } from "express";
-import CommentRepository from "../repository/CommentRepository";
-import ThreadRepository from "../repository/ThreadRepository";
-import { AuthenticatedRequest } from "../utilities/interface";
-import { failResponse, successResponse } from "../utilities/response";
+import { Request, Response } from 'express';
+import CommentRepository from '../repository/CommentRepository';
+import ThreadRepository from '../repository/ThreadRepository';
+import { AuthenticatedRequest } from '../utilities/interface';
+import { failResponse, successResponse } from '../utilities/response';
 
 class CommentService {
   credential: any;
-  body: Request["body"];
-  params: Request["params"];
+  body: Request['body'];
+  params: Request['params'];
 
   constructor(req: AuthenticatedRequest, res: Response) {
     if (req.user) {
@@ -22,7 +22,7 @@ class CommentService {
   private async getThreadById(id: number) {
     const thread = await ThreadRepository.getThreadById(id);
     if (!thread) {
-      return failResponse(404, "thread tidak ditemukan");
+      return failResponse(404, 'thread tidak ditemukan');
     }
     return thread;
   }
@@ -40,7 +40,7 @@ class CommentService {
     );
 
     if (!comment) {
-      return failResponse(400, "thread gagal ditambahkan");
+      return failResponse(400, 'thread gagal ditambahkan');
     }
 
     const comments = await CommentRepository.getCommentByThreadId(thread.id);
@@ -54,11 +54,11 @@ class CommentService {
 
     const comment = await CommentRepository.getCommentById(Number(commentId));
     if (!comment) {
-      return failResponse(404, "comentar tidak ditemukan");
+      return failResponse(404, 'comentar tidak ditemukan');
     }
 
     if (id !== comment.user_id || thread.id !== comment.thread_id) {
-      return failResponse(403, "anda tidak berhak mengakses resource ini");
+      return failResponse(403, 'anda tidak berhak mengakses resource ini');
     }
 
     await CommentRepository.deleteComment(comment.id);

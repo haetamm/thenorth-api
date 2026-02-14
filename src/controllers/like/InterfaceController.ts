@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
 interface IController {
-    create(req: Request, res: Response): Promise<Response>;
+  create(req: Request, res: Response): Promise<Response>;
 }
 
 export default IController;

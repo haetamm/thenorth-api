@@ -2,50 +2,144 @@
 
 ## Frontend => https://github.com/haetamm/thenorth
 
+---
 
-## Project Setup
+## 📋 Project Setup
 
+### Prerequisites
+- Docker & Docker Compose installed
+- Node.js 22+ (if running locally without Docker)
+- PostgreSQL 17+ (if running locally without Docker)
+
+### 1. **Initial Setup**
+
+Clone the repository:
 ```sh
-copy .env.example file to .env and edit database credentials there
+git clone <repository-url>
+cd thenorth-api
+```
+---
+
+## 🐳 Development Setup (With Docker) - RECOMMENDED
+
+### 1. **Create Environment File**
+
+Copy and edit the environment file:
+```sh
+cp .env.dev.example .env.dev
 ```
 
-```sh
-npm install
+Edit `.env.dev` with your configuration:
+```env
+NODE_ENV=development
+DB_USER=postgres
+DB_PASS=yourpassword
+DB_NAME=app_dev
+DB_HOST=db
+DB_PORT=5432
+JWT_SECRET=your-secret-key-here
+JWT_EXPIRES=45m
 ```
 
-__Migration Table__
+### 2. **Start Docker Containers**
 
-
+Build and start the containers:
 ```sh
-npx sequelize-cli db:migrate
+docker-compose -f docker-compose.dev.yml up --build
 ```
 
+Wait for the database to be ready (you'll see `service_healthy` in logs).
+
+### 3. **Database Migration**
+
+Run this command in a new terminal:
 ```sh
-npx sequelize-cli db:migrate:undo
+docker compose -f docker-compose.dev.yml run --rm app npm run migrate
 ```
 
-__Database Seeders__
-
+Revert the most recently applied migration.
 ```sh
-npx sequelize-cli db:seed:all
+docker compose -f docker-compose.dev.yml run --rm app npm run migrate-undo
 ```
 
-### Compile and Hot-Reload for Development
+### 4. **Database Seeder**
 
+Run this command in a new terminal:
 ```sh
-npm run dev
+docker compose -f docker-compose.dev.yml run --rm app npm run seed
 ```
 
+This will:
+- ✅ Run migrations
+- ✅ Seed the database with initial data
+
+### 5. **Access the Application**
+
+Open your browser and go to:
+- **API Base URL**: [http://localhost:8000](http://localhost:8000)
+
+---
+
+## 🏗️ Production Setup (With Docker) - RECOMMENDED
+
+### 1. **Create Environment File**
+
+Copy and edit the environment file:
 ```sh
-npm run ts
+cp .env.prod.example .env.prod
 ```
 
-### Compile and Minify for Production
+Edit `.env.prod` with your configuration:
+```env
+NODE_ENV=production
 
-```sh
-npm run tsc
+DATABASE_URL=[supbase url - Connection pooler]
+JWT_SECRET=dkfjdkfjdlfjdkfjldjf
+JWT_EXPIRES=45m
 ```
 
-Open [http://localhost:8000/api-docs](http://localhost:8000/api-docs) with your browser to see the documentation API.
+### 2. **Start Docker Containers**
 
+Build and start the containers:
+```sh
+docker-compose -f docker-compose.prod.yml up --build
+```
 
+### 3. **Database Migration**
+
+Run this command in a new terminal:
+```sh
+docker compose -f docker-compose.prod.yml run --rm app npm run migrate:prod
+```
+### 4. **Database Seeder**
+
+Run this command in a new terminal:
+```sh
+docker compose -f docker-compose.prod.yml run --rm app npm run seed:prod
+```
+
+This will:
+- ✅ Run migrations
+- ✅ Seed the database with initial data
+
+### 5. **Access the Application**
+
+Open your browser and go to:
+- **API Base URL**: [http://localhost:8000](http://localhost:8000)
+
+---
+
+## 🛠️ Available NPM Scripts
+
+```sh
+npm run tsc         # Compile TypeScript to JavaScript
+npm run ts          # Compile TypeScript (watch mode)
+npm run dev         # Run development server with ts-node-dev
+npm run migrate     # Run database migrations
+npm run migrate-undo # Undo last migration
+npm run seed        # Seed the database
+```
+
+---
+
+**Happy Coding! 🚀**

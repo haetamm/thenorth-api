@@ -1,4 +1,4 @@
-const db = require("../db/models");
+const db = require('../db/models');
 
 class UserRepository {
   static async getUsers(page = 1, limit = 10) {
@@ -7,10 +7,10 @@ class UserRepository {
         include: [
           {
             model: db.role,
-            as: "roles",
+            as: 'roles',
             where: {
               name: {
-                [db.Sequelize.Op.ne]: "ADMIN", // Filter agar tidak mengambil user dengan role ADMIN
+                [db.Sequelize.Op.ne]: 'ADMIN', // Filter agar tidak mengambil user dengan role ADMIN
               },
             },
             required: true, // Hanya ambil user yang memiliki role (mencegah user tanpa role masuk)
@@ -24,20 +24,20 @@ class UserRepository {
 
       const data = await db.user.findAll({
         attributes: [
-          "id",
-          "username",
-          "created_at",
-          "updated_at",
-          "deleted_at",
-          "expried_token",
+          'id',
+          'username',
+          'created_at',
+          'updated_at',
+          'deleted_at',
+          'expried_token',
         ],
         include: [
           {
             model: db.role,
-            as: "roles",
+            as: 'roles',
             where: {
               name: {
-                [db.Sequelize.Op.ne]: "ADMIN",
+                [db.Sequelize.Op.ne]: 'ADMIN',
               },
             },
             required: true,
@@ -68,7 +68,7 @@ class UserRepository {
           {
             model: db.role,
             through: { attributes: [] },
-            attributes: ["name"],
+            attributes: ['name'],
           },
         ],
         paranoid: false,
@@ -106,7 +106,7 @@ class UserRepository {
           {
             model: db.role,
             through: { attributes: [] },
-            attributes: ["name"],
+            attributes: ['name'],
           },
         ],
         paranoid: false,
@@ -120,7 +120,7 @@ class UserRepository {
   }
 
   public static async updateUserById(
-    id: Number,
+    id: number,
     username: string,
     password?: string
   ) {
@@ -147,7 +147,7 @@ class UserRepository {
     }
   }
 
-  public static async updateExpriedToken(expried_token: Date, id: Number) {
+  public static async updateExpriedToken(expried_token: Date, id: number) {
     try {
       console.log(`expried ${expried_token}`);
       await db.user.update(

@@ -1,14 +1,14 @@
-import { Request, Response } from "express";
-import IController from "./InterfaceController";
-import UserService from "../../service/UserService";
+import { Request, Response } from 'express';
+import IController from './InterfaceController';
+import UserService from '../../service/UserService';
 
 class UserController implements IController {
   index = async (req: Request, res: Response): Promise<Response> => {
     const service: UserService = new UserService(req, res);
-    const page: number = parseInt(req.query.page?.toString() || "1");
-    const limit: number = parseInt(req.query.limit?.toString() || "10");
+    const page: number = parseInt(req.query.page?.toString() || '1');
+    const limit: number = parseInt(req.query.limit?.toString() || '10');
     const users = await service.getUsers(page, limit);
-    return res.status(200).json({ status: "success", data: users });
+    return res.status(200).json({ status: 'success', data: users });
   };
 
   create = async (req: Request, res: Response): Promise<Response> => {

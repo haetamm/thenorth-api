@@ -1,14 +1,14 @@
-import { Request, Response } from "express";
-import IController from "./InterfaceController";
-import ThreadService from "../../service/ThreadService";
+import { Request, Response } from 'express';
+import IController from './InterfaceController';
+import ThreadService from '../../service/ThreadService';
 
 class ThreadController implements IController {
   index = async (req: Request, res: Response): Promise<Response> => {
     const service: ThreadService = new ThreadService(req, res);
-    const page: number = parseInt(req.query.page?.toString() || "1");
-    const limit: number = parseInt(req.query.limit?.toString() || "10");
+    const page: number = parseInt(req.query.page?.toString() || '1');
+    const limit: number = parseInt(req.query.limit?.toString() || '10');
     const threads = await service.getThreads(page, limit);
-    return res.status(200).json({ status: "success", data: threads });
+    return res.status(200).json({ status: 'success', data: threads });
   };
 
   create = async (req: Request, res: Response): Promise<Response> => {
@@ -28,16 +28,16 @@ class ThreadController implements IController {
     res: Response
   ): Promise<Response> => {
     const service: ThreadService = new ThreadService(req, res);
-    const page: number = parseInt(req.query.page?.toString() || "1");
-    const limit: number = parseInt(req.query.limit?.toString() || "10");
+    const page: number = parseInt(req.query.page?.toString() || '1');
+    const limit: number = parseInt(req.query.limit?.toString() || '10');
     const thread = await service.showByCurrentUser(page, limit);
     return res.status(thread.statusCode).json(thread);
   };
 
   showByLikeUser = async (req: Request, res: Response): Promise<Response> => {
     const service: ThreadService = new ThreadService(req, res);
-    const page: number = parseInt(req.query.page?.toString() || "1");
-    const limit: number = parseInt(req.query.limit?.toString() || "10");
+    const page: number = parseInt(req.query.page?.toString() || '1');
+    const limit: number = parseInt(req.query.limit?.toString() || '10');
     const thread = await service.getThreadByLikeUser(page, limit);
     return res.status(thread.statusCode).json(thread);
   };

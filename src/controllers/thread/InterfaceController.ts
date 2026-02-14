@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
 interface IController {
   index(req: Request, res: Response): Promise<Response>;

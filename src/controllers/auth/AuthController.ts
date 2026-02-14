@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
-import IController from "./InterfaceController";
-import UserRepository from "../../repository/UserRepository";
-import AuthenticationService from "../../service/AuthenticationService";
-import { AuthenticatedRequest } from "../../utilities/interface";
+import { Request, Response } from 'express';
+import IController from './InterfaceController';
+import UserRepository from '../../repository/UserRepository';
+import AuthenticationService from '../../service/AuthenticationService';
+import { AuthenticatedRequest } from '../../utilities/interface';
 
 class AuthController implements IController {
   index = async (
@@ -18,8 +18,8 @@ class AuthController implements IController {
     const user = await UserRepository.getUserByUsername(username);
     if (!user) {
       return res.status(404).json({
-        status: "fail",
-        message: "User tidak ditemukan",
+        status: 'fail',
+        message: 'User tidak ditemukan',
       });
     }
 
@@ -29,8 +29,8 @@ class AuthController implements IController {
     );
     if (!compare) {
       return res.status(401).json({
-        status: "fail",
-        message: "Username atau password salah",
+        status: 'fail',
+        message: 'Username atau password salah',
       });
     }
 
@@ -49,17 +49,17 @@ class AuthController implements IController {
 
     await UserRepository.updateExpriedToken(expiresDate, user.id);
 
-    res.cookie("token", token, {
+    res.cookie('token', token, {
       httpOnly: true,
       secure: true,
-      sameSite: "none",
+      sameSite: 'none',
       expires: expiresDate,
     });
 
     return res.json({
       statusCode: 200,
-      status: "success",
-      message: "Login sukses",
+      status: 'success',
+      message: 'Login sukses',
       token: token,
     });
   };
@@ -72,15 +72,15 @@ class AuthController implements IController {
     const expiresDate = new Date();
 
     await UserRepository.updateExpriedToken(expiresDate, Number(credential));
-    res.setHeader("Authorization", "");
+    res.setHeader('Authorization', '');
     // res.clearCookie('token');
-    res.clearCookie("token", {
+    res.clearCookie('token', {
       httpOnly: true,
       secure: true,
-      sameSite: "none",
+      sameSite: 'none',
     });
 
-    return res.json({ message: "Logout berhasil" });
+    return res.json({ message: 'Logout berhasil' });
   };
 }
 

@@ -1,4 +1,4 @@
-const db = require("../db/models");
+const db = require('../db/models');
 
 class LikeRepository {
   public static async checkLikesThread(user_id: number, thread_id: number) {
@@ -23,7 +23,7 @@ class LikeRepository {
     }
   }
 
-  public static async unlikeDelete(id: Number, thread_id: number) {
+  public static async unlikeDelete(id: number, thread_id: number) {
     try {
       await db.like.destroy({
         where: { id, thread_id },
@@ -50,7 +50,7 @@ class LikeRepository {
     }
   }
 
-  public static async deleteLikeByUserId(user_id: Number) {
+  public static async deleteLikeByUserId(user_id: number) {
     try {
       await db.like.destroy({
         where: { user_id: user_id },
@@ -76,7 +76,7 @@ class LikeRepository {
     try {
       const likes = await db.like.findAll({
         where: { user_id: userId },
-        attributes: ["thread_id"],
+        attributes: ['thread_id'],
         raw: true,
       });
 

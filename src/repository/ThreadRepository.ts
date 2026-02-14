@@ -1,6 +1,6 @@
-import { Sequelize } from "../db/models";
-const db = require("../db/models");
-const { Op } = require("sequelize");
+import { Sequelize } from '../db/models';
+const db = require('../db/models');
+const { Op } = require('sequelize');
 
 class ThreadRepository {
   static async getThreads(page = 1, limit = 10, userId: number | undefined) {
@@ -11,7 +11,7 @@ class ThreadRepository {
         include: [
           {
             model: db.user,
-            attributes: ["id", "username"],
+            attributes: ['id', 'username'],
           },
           {
             model: db.comment,
@@ -23,33 +23,33 @@ class ThreadRepository {
           },
         ],
         attributes: [
-          "id",
-          "title",
-          "body",
-          "slug",
-          "updated_at",
-          "created_at",
+          'id',
+          'title',
+          'body',
+          'slug',
+          'updated_at',
+          'created_at',
           [
-            Sequelize.fn("COUNT", Sequelize.literal("DISTINCT comments.id")),
-            "comment_count",
+            Sequelize.fn('COUNT', Sequelize.literal('DISTINCT comments.id')),
+            'comment_count',
           ],
           [
-            Sequelize.fn("COUNT", Sequelize.literal("DISTINCT likes.id")),
-            "like_count",
+            Sequelize.fn('COUNT', Sequelize.literal('DISTINCT likes.id')),
+            'like_count',
           ],
           [
             Sequelize.literal(`CASE WHEN EXISTS (
                 SELECT 1 FROM "likes" AS l
                 WHERE l.thread_id = thread.id AND l.user_id = ${
-                  userId || "NULL"
+                  userId || 'NULL'
                 } AND l.deleted_at IS NULL
               ) THEN true ELSE false END`),
-            "liked",
+            'liked',
           ],
         ],
         subQuery: false,
-        group: ["thread.id", "user.id"],
-        order: [["created_at", "DESC"]],
+        group: ['thread.id', 'user.id'],
+        order: [['created_at', 'DESC']],
         offset: (page - 1) * limit,
         limit: limit,
       });
@@ -61,7 +61,7 @@ class ThreadRepository {
         totalCount,
       };
     } catch (err) {
-      console.error("Error in getThreads:", err);
+      console.error('Error in getThreads:', err);
       return null;
     }
   }
@@ -77,7 +77,7 @@ class ThreadRepository {
         include: [
           {
             model: db.user,
-            attributes: ["id", "username"],
+            attributes: ['id', 'username'],
           },
           {
             model: db.comment,
@@ -89,33 +89,33 @@ class ThreadRepository {
           },
         ],
         attributes: [
-          "id",
-          "title",
-          "body",
-          "slug",
-          "updated_at",
-          "created_at",
+          'id',
+          'title',
+          'body',
+          'slug',
+          'updated_at',
+          'created_at',
           [
-            Sequelize.fn("COUNT", Sequelize.literal("DISTINCT comments.id")),
-            "comment_count",
+            Sequelize.fn('COUNT', Sequelize.literal('DISTINCT comments.id')),
+            'comment_count',
           ],
           [
-            Sequelize.fn("COUNT", Sequelize.literal("DISTINCT likes.id")),
-            "like_count",
+            Sequelize.fn('COUNT', Sequelize.literal('DISTINCT likes.id')),
+            'like_count',
           ],
           [
             Sequelize.literal(`CASE WHEN EXISTS (
                 SELECT 1 FROM "likes" AS l
                 WHERE l.thread_id = thread.id AND l.user_id = ${
-                  userId || "NULL"
+                  userId || 'NULL'
                 } AND l.deleted_at IS NULL
               ) THEN true ELSE false END`),
-            "liked",
+            'liked',
           ],
         ],
         subQuery: false,
-        group: ["thread.id", "user.id"],
-        order: [["created_at", "DESC"]],
+        group: ['thread.id', 'user.id'],
+        order: [['created_at', 'DESC']],
         offset: (page - 1) * limit,
         limit: limit,
       });
@@ -148,7 +148,7 @@ class ThreadRepository {
         include: [
           {
             model: db.user,
-            attributes: ["id", "username"],
+            attributes: ['id', 'username'],
           },
           {
             model: db.comment,
@@ -160,33 +160,33 @@ class ThreadRepository {
           },
         ],
         attributes: [
-          "id",
-          "title",
-          "body",
-          "slug",
-          "updated_at",
-          "created_at",
+          'id',
+          'title',
+          'body',
+          'slug',
+          'updated_at',
+          'created_at',
           [
-            Sequelize.fn("COUNT", Sequelize.literal("DISTINCT comments.id")),
-            "comment_count",
+            Sequelize.fn('COUNT', Sequelize.literal('DISTINCT comments.id')),
+            'comment_count',
           ],
           [
-            Sequelize.fn("COUNT", Sequelize.literal("DISTINCT likes.id")),
-            "like_count",
+            Sequelize.fn('COUNT', Sequelize.literal('DISTINCT likes.id')),
+            'like_count',
           ],
           [
             Sequelize.literal(`CASE WHEN EXISTS (
                 SELECT 1 FROM "likes" AS l
                 WHERE l.thread_id = thread.id AND l.user_id = ${
-                  userId || "NULL"
+                  userId || 'NULL'
                 } AND l.deleted_at IS NULL
               ) THEN true ELSE false END`),
-            "liked",
+            'liked',
           ],
         ],
         subQuery: false,
-        group: ["thread.id", "user.id"],
-        order: [["created_at", "DESC"]],
+        group: ['thread.id', 'user.id'],
+        order: [['created_at', 'DESC']],
         offset: (page - 1) * limit,
         limit: limit,
       });
@@ -224,14 +224,14 @@ class ThreadRepository {
         include: [
           {
             model: db.user,
-            attributes: ["id", "username"],
+            attributes: ['id', 'username'],
           },
           {
             model: db.comment,
-            attributes: ["id", "comentar", "created_at", "thread_id"],
+            attributes: ['id', 'comentar', 'created_at', 'thread_id'],
             include: {
               model: db.user,
-              attributes: ["id", "username"],
+              attributes: ['id', 'username'],
             },
           },
           {
@@ -240,27 +240,27 @@ class ThreadRepository {
           },
         ],
         attributes: [
-          "id",
-          "title",
-          "body",
-          "slug",
-          "updated_at",
+          'id',
+          'title',
+          'body',
+          'slug',
+          'updated_at',
           [
-            Sequelize.fn("COUNT", Sequelize.literal("DISTINCT likes.id")),
-            "like_count",
+            Sequelize.fn('COUNT', Sequelize.literal('DISTINCT likes.id')),
+            'like_count',
           ],
           [
             Sequelize.literal(`CASE WHEN EXISTS (
                 SELECT 1 FROM "likes" AS l
                 WHERE l.thread_id = thread.id AND l.user_id = ${
-                  userId || "NULL"
+                  userId || 'NULL'
                 } AND l.deleted_at IS NULL
               ) THEN true ELSE false END`),
-            "liked",
+            'liked',
           ],
         ],
         subQuery: false,
-        group: ["thread.id", "user.id", "comments.id", "comments.user.id"],
+        group: ['thread.id', 'user.id', 'comments.id', 'comments.user.id'],
       });
 
       return thread ? thread : false;
@@ -287,7 +287,7 @@ class ThreadRepository {
     }
   }
 
-  public static async updateThread(id: Number, title: string, body: string) {
+  public static async updateThread(id: number, title: string, body: string) {
     try {
       await db.thread.update({ title, body }, { where: { id: id } });
     } catch (err) {
@@ -295,7 +295,7 @@ class ThreadRepository {
     }
   }
 
-  public static async deleteThread(id: Number) {
+  public static async deleteThread(id: number) {
     try {
       await db.thread.destroy({
         where: { id: id },
@@ -305,7 +305,7 @@ class ThreadRepository {
     }
   }
 
-  public static async deleteThreadByUserId(user_id: Number) {
+  public static async deleteThreadByUserId(user_id: number) {
     try {
       await db.thread.destroy({
         where: { user_id: user_id },

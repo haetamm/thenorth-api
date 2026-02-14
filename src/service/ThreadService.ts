@@ -1,14 +1,14 @@
-const { v4: uuidv4 } = require("uuid");
-import { Request, Response } from "express";
-import ThreadRepository from "../repository/ThreadRepository";
-import LikeRepository from "../repository/LikeRepository";
-import { AuthenticatedRequest, User } from "../utilities/interface";
-import { failResponse, successResponse } from "../utilities/response";
+const { v4: uuidv4 } = require('uuid');
+import { Request, Response } from 'express';
+import ThreadRepository from '../repository/ThreadRepository';
+import LikeRepository from '../repository/LikeRepository';
+import { AuthenticatedRequest, User } from '../utilities/interface';
+import { failResponse, successResponse } from '../utilities/response';
 
 class ThreadService {
   credential: any;
-  body: Request["body"];
-  params: Request["params"];
+  body: Request['body'];
+  params: Request['params'];
 
   constructor(req: AuthenticatedRequest, res: Response) {
     if (req.user) {
@@ -23,7 +23,7 @@ class ThreadService {
   private async getThreadById(id: number) {
     const thread = await ThreadRepository.getThreadById(id);
     if (!thread) {
-      return failResponse(404, "thread tidak ditemukan");
+      return failResponse(404, 'thread tidak ditemukan');
     }
     return thread;
   }
@@ -46,7 +46,7 @@ class ThreadService {
       body
     );
     if (!result) {
-      return failResponse(400, "thread gagal ditambahkan");
+      return failResponse(400, 'thread gagal ditambahkan');
     }
     return successResponse(201, result);
   }
@@ -77,7 +77,7 @@ class ThreadService {
     const thread = await this.getThreadById(Number(threadId));
 
     if (thread.user_id !== id) {
-      return failResponse(403, "anda tidak berhak mengakses resource ");
+      return failResponse(403, 'anda tidak berhak mengakses resource ');
     }
 
     await ThreadRepository.updateThread(thread.id, title, body);
@@ -93,7 +93,7 @@ class ThreadService {
     const thread = await this.getThreadById(Number(threadId));
 
     if (thread.user_id !== id) {
-      return failResponse(403, "anda tidak berhak mengakses resource ");
+      return failResponse(403, 'anda tidak berhak mengakses resource ');
     }
 
     await ThreadRepository.deleteThread(thread.id);
@@ -108,11 +108,11 @@ class ThreadService {
     const id = this.credential?.id;
     const thread = await ThreadRepository.getThreadBySlug(slug);
     if (!thread) {
-      return failResponse(404, "thread tidak ditemukan");
+      return failResponse(404, 'thread tidak ditemukan');
     }
 
     const detailThread = await ThreadRepository.getDetailThread(thread.id, id);
-    return { statusCode: 200, status: "success", data: detailThread };
+    return { statusCode: 200, status: 'success', data: detailThread };
   }
 }
 

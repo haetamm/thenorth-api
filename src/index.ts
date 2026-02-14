@@ -1,15 +1,15 @@
-import express, { Application, Request, Response } from "express";
-import compression from "compression";
-import helmet from "helmet";
-import cors from "cors";
-import { config as dotenv } from "dotenv";
-import cookieParser from "cookie-parser";
+import express, { Application, Request, Response } from 'express';
+import compression from 'compression';
+import helmet from 'helmet';
+import cors from 'cors';
+import { config as dotenv } from 'dotenv';
+import cookieParser from 'cookie-parser';
 
-import UserRoutes from "./routers/UserRoutes";
-import AuthRoutes from "./routers/AuthRoutes";
-import ThreadRoutes from "./routers/ThreadRoutes";
-import CommentRoutes from "./routers/CommentRoutes";
-import LikeRoutes from "./routers/LikeRoutes";
+import UserRoutes from './routers/UserRoutes';
+import AuthRoutes from './routers/AuthRoutes';
+import ThreadRoutes from './routers/ThreadRoutes';
+import CommentRoutes from './routers/CommentRoutes';
+import LikeRoutes from './routers/LikeRoutes';
 
 class App {
   public app: Application;
@@ -32,22 +32,22 @@ class App {
       cors({
         // origin: 'https://thenorth.vercel.app', // Ganti dengan asal/frontend yang sesuai
         // origin: 'https://the-north.netlify.app', // Ganti dengan asal/frontend yang sesuai
-        origin: "http://localhost:3000",
+        origin: 'http://localhost:3000',
         credentials: true, // Mengizinkan penggunaan kredensial
       })
     );
   }
 
   protected routes(): void {
-    this.app.route("/").get((req: Request, res: Response) => {
-      res.send("ini adalah api menggunakan typesrcript");
+    this.app.route('/').get((req: Request, res: Response) => {
+      res.send('ini adalah api menggunakan typesrcript');
     });
 
-    this.app.use("/api/v1/users", UserRoutes);
-    this.app.use("/api/v1/auth", AuthRoutes);
-    this.app.use("/api/v1/threads", ThreadRoutes);
-    this.app.use("/api/v1/comments", CommentRoutes);
-    this.app.use("/api/v1/likes", LikeRoutes);
+    this.app.use('/api/v1/users', UserRoutes);
+    this.app.use('/api/v1/auth', AuthRoutes);
+    this.app.use('/api/v1/threads', ThreadRoutes);
+    this.app.use('/api/v1/comments', CommentRoutes);
+    this.app.use('/api/v1/likes', LikeRoutes);
   }
 }
 
