@@ -32,7 +32,7 @@ class App {
       cors({
         // origin: 'https://thenorth.vercel.app', // Ganti dengan asal/frontend yang sesuai
         // origin: 'https://the-north.netlify.app', // Ganti dengan asal/frontend yang sesuai
-        origin: 'http://localhost:3000',
+        origin: process.env.FRONT_END_URL,
         credentials: true, // Mengizinkan penggunaan kredensial
       })
     );
